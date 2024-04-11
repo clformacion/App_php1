@@ -1,0 +1,143 @@
+**************************************************************************
+            Enviar múltiple Checkbox MySQL con PHP                              
+*************************************************************************
+
+                        INTRODUCCION 
+
+
+
+Enviar múltiple Checkbox MySQL. En esta aplicacion crearemos un 
+script para Enviar múltiples datos de casilla de verificación
+ a MySQL. Recordemos, que PHP es un lenguaje de programación 
+ del lado del servidor diseñado principalmente para el desarrollo
+web.
+
+Se conecta a la base de datos de manera muy amigable usando 
+varios tipos de conexión. Por lo tanto, esto significa que los 
+desarrolladores pueden escribir su código de manera muy amigable.
+
+***************************************************************
+
+¿Qué recursos usaran para el desarrollo?
+
+Descargar e instalar XAMPP o cualquier servidor local que ejecute
+scripts PHP y MySQL 
+
+jQuery .- Es necesario para el correcto funcionamiento del script
+ Framework Bootstrap .- Hemos usado la version 5 de este 
+ maravilloso framework para el entorno de diseño .
+ 
+Lenguaje PHP.- Encargado de realizar la conexión con la base
+ de datos y almacenar los checkbox en un array usando el método
+ POST.
+
+****************************************************************
+
+a) Base de datos
+Usaremos una base de datos para almacenar los checkbox en una 
+sola columna de manera array y el nombre de base de datos será 
+“db_checkbox“. Además, no se olviden de importar las consultas
+SQL del script.
+
+***************************************************************
+
+1.-Crear nuestra base de datos para correcto funcionamiento de la 
+aplicacion.
+
+***************************************************************
+
+2.) Conexión a la base de datos
+El nombre del archivo de conexión con mysql será “config.php” y
+contendrá las credenciales de conexión a mysql mediante el tipo 
+de conexión PDO PHP.
+
+LA EXTENSION PDO: 
+La extensión Objetos de Datos de PHP ( PDO por sus siglás en 
+inglés) define una interfaz ligera para poder acceder a bases
+de datos en PHP.
+
+**************************************************************
+
+3-)Index.php .- Creando la interfaz
+En este archivo crearemos el formulario principal para nuestra
+aplicación. Sin embargo, podemos visualizar los registros 
+insertados a la base de datos.
+
+
+
+
+*************************************************************
+<table class="table table-bordered">
+<thead class="btn-primary">
+<tr>
+<th>#</th>
+<th>Nombre</th>
+<th>Apellidos</th>
+<th>Pais</th>
+<th>Programas</th>
+</tr>
+</thead>
+<tbody style="background-color:#fff;">
+
+
+
+
+
+<?php
+require 'config.php';
+$query = $db->prepare("SELECT * FROM personal");
+$query->execute();
+
+if($query->rowCount() == 0){
+echo '<tr>
+<td colspan="4"></td>
+</tr>';
+
+}else {
+$n=0;
+$data = $query->fetchAll();
+foreach ($data as $value): 
+$n++; 
+echo '<tr>
+<td>'.$n.'</td>
+<td>'.$value["nombres"].'</td>
+<td>'.$value["apellidos"].'</td>
+<td>'.$value["pais"].'</td>
+<td>'.$value["programas"].'</td>
+</tr>';
+endforeach; 
+}
+$db = null;
+?>
+</tbody>
+</table>
+
+
+
+**********************************************************
+4.- Insertar.php .- Creación de la función principal
+
+Este script será el encargado de procesar la información
+enviada desde el formulario y si pasa los criterios será
+almacenada en la base de datos. Por lo tanto, contiene la
+consulta PHP para insertar en la tabla personal.
+
+
+Además. convertirá en un array los checkbox y lo almacenará
+ en la columna del  programas.
+
+
+********************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
